@@ -1,0 +1,9 @@
+node_modules/
+
+# Playwright test output dirs
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Session state file
+state.json
