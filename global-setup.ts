@@ -4,6 +4,7 @@ import { ConsentPage } from './src/pages/consent.page';
 
 export default async function (config: FullConfig) {
   const { storageState } = config.projects[0].use;
+  const { outputDir } = config.projects[0];
 
   const browser = await chromium.launch();
   const page = await browser.newPage();
@@ -11,10 +12,20 @@ export default async function (config: FullConfig) {
 
   const consentPage = new ConsentPage(page);
 
-  await consentPage.open();
-  await consentPage.acceptAll.click();
+  try {
+    await context.tracing.start({ screenshots: true, snapshots: true });
 
-  await context.storageState({ path: storageState as string });
+    await consentPage.open();
+    await consentPage.acceptAll.click();
 
-  await browser.close();
+    await context.storageState({ path: storageState as string });
+
+    await context.tracing.stop({ path: outputDir + '/setup-trace.zip' });
+    await browser.close();
+  } catch (error) {
+    await context.tracing.stop({ path: outputDir + '/setup-trace.zip' });
+    await browser.close();
+
+    throw error;
+  }
 }
