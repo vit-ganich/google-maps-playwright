@@ -26,7 +26,7 @@ const config: PlaywrightTestConfig = {
   globalSetup: require.resolve('./global-setup'),
   use: {
     baseURL: 'https://www.google.com/maps',
-    storageState: 'state.json',
+    storageState: process.env.CI ? undefined : 'state.json',
     actionTimeout: 0,
     screenshot: 'on',
     trace: 'on-first-retry',
