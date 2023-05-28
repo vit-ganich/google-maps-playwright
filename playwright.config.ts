@@ -20,7 +20,7 @@ const config: PlaywrightTestConfig = {
   },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 2 : 1,
   reporter: [['list'], ['html']],
   globalSetup: require.resolve('./global-setup'),
@@ -37,7 +37,7 @@ const config: PlaywrightTestConfig = {
       acceptDownloads: true,
     },
     headless: true,
-    locale: 'en-GB',
+    locale: process.env.LOCALE ? process.env.LOCALE : 'en-GB',
   },
 
   projects: [

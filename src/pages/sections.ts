@@ -1,6 +1,5 @@
 import { Locator } from '@playwright/test';
 import { BasePage } from './base.page';
-import gb from '../localisations/eu-GB';
 
 export class SearchResults extends BasePage {
   placeName: Locator = this.page.locator('h1.fontHeadlineLarge');

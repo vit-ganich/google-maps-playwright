@@ -1,8 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from '../test-runner';
-import gb from '../localisations/eu-GB';
-
-test.describe.configure({ mode: 'parallel' });
+import locales from '../locale/locales';
+import config from '../../playwright.config';
 
 /**
  * User Story
@@ -46,9 +45,12 @@ test('AC2: Search by keyword and get directions', async ({
   );
 });
 
-test('AC3: Empty search results with an invalid keyword', async ({
+// Localization test. Depends on the locale from .env
+const localization = config.use?.locale;
+const locale = locales[localization as keyof typeof locales];
+
+test(`AC3: ${localization} - Empty search results with an invalid keyword`, async ({
   googleMapsPage,
-  page,
 }) => {
   // WHEN the user enters invalid characters in the search box
   // AND clicks “Search”
@@ -56,10 +58,10 @@ test('AC3: Empty search results with an invalid keyword', async ({
 
   // THEN the empty search results message should be visible
   await expect(searchResults.resultsNotFound).toContainText(
-    gb.emptySearch.message,
+    locale.emptySearch.message,
   );
   // AND the empty search results description should be visible
   await expect(searchResults.resultsNotFound).toContainText(
-    gb.emptySearch.description,
+    locale.emptySearch.description,
   );
 });
