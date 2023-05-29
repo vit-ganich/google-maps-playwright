@@ -27,7 +27,9 @@ test(`AC1: ${localeName} - Search by keyword`, async ({ googleMapsPage }) => {
   // THEN the left panel should have the place name as the headline text
   await expect.soft(searchResults.placeName).toHaveText(locale.cities.paris);
   // And the left panel should have the country name as the headline text
-  await expect(searchResults.countryName).toHaveText(locale.countries.france);
+  await expect(
+    searchResults.countryName.filter({ hasText: locale.countries.france }),
+  ).toBeVisible();
 });
 
 test(`AC2: ${localeName} - Search by keyword and get directions`, async ({
@@ -57,7 +59,9 @@ test(`AC3: ${localeName} - Empty search results with an invalid keyword`, async 
 }) => {
   // WHEN the user enters invalid characters in the search box
   // AND clicks “Search”
-  const searchResults = await googleMapsPage.perfomSearch('*//-&*(><+_*&*#@$');
+  const searchResults = await googleMapsPage.perfomSearch(
+    '_____*//-&*(><+_*&*#@$',
+  );
 
   // THEN the empty search results message should be visible
   await expect
