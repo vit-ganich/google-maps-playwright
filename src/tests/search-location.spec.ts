@@ -3,6 +3,12 @@ import { test } from '../test-runner';
 import locales from '../locale/locales';
 import config from '../../playwright.config';
 
+// Localization test. Depends on the locale from .env
+// Unfortunately, I did not found a way to test locales in sequence, like:
+//  for(const localeName of ['en-GB', 'pl-PL']);
+const localeName = config.use?.locale;
+const locale = locales[localeName as keyof typeof locales];
+
 /**
  * User Story
  * As a Google Maps user, I want to search for a location via the search bar
@@ -13,43 +19,40 @@ test.beforeEach(async ({ googleMapsPage }) => {
   await googleMapsPage.open();
 });
 
-test('AC1: Search by keyword', async ({ googleMapsPage }) => {
+test(`AC1: ${localeName} - Search by keyword`, async ({ googleMapsPage }) => {
   // WHEN the user enters “Paris” in the search box
   // AND clicks “Search”
-  const searchResults = await googleMapsPage.perfomSearch('Paris');
+  const searchResults = await googleMapsPage.perfomSearch(locale.cities.paris);
 
   // THEN the left panel should have the place name as the headline text
-  await expect(searchResults.placeName).toHaveText('Paris');
+  await expect.soft(searchResults.placeName).toHaveText(locale.cities.paris);
   // And the left panel should have the country name as the headline text
-  await expect(searchResults.countryName).toHaveText('France');
+  await expect(searchResults.countryName).toHaveText(locale.countries.france);
 });
 
-test('AC2: Search by keyword and get directions', async ({
+test(`AC2: ${localeName} - Search by keyword and get directions`, async ({
   googleMapsPage,
 }) => {
   // WHEN the user enters “Paris” in the search box
   // AND clicks “Search”
-  const searchResults = await googleMapsPage.perfomSearch('London');
+  const searchResults = await googleMapsPage.perfomSearch(locale.cities.london);
 
   // THEN the left panel should have the place name as the headline text
-  await expect(searchResults.placeName).toHaveText('London');
+  await expect.soft(searchResults.placeName).toHaveText(locale.cities.london);
   // And the left panel should have the country name as the headline text
-  await expect(searchResults.countryName).toHaveText('United Kingdom');
+  await expect(searchResults.countryName).toHaveText(locale.countries.uk);
 
   // WHEN the user clicks the "Directions" button
   const directions = await searchResults.goToDirections();
   // THEN the destination field should contain "London"
+  const destinationText = `${locale.search.destination} ${locale.cities.london}`;
   await expect(directions.destination).toHaveAttribute(
     'aria-label',
-    'Destination London, UK',
+    new RegExp(destinationText),
   );
 });
 
-// Localization test. Depends on the locale from .env
-const localization = config.use?.locale;
-const locale = locales[localization as keyof typeof locales];
-
-test(`AC3: ${localization} - Empty search results with an invalid keyword`, async ({
+test(`AC3: ${localeName} - Empty search results with an invalid keyword`, async ({
   googleMapsPage,
 }) => {
   // WHEN the user enters invalid characters in the search box
@@ -57,9 +60,9 @@ test(`AC3: ${localization} - Empty search results with an invalid keyword`, asyn
   const searchResults = await googleMapsPage.perfomSearch('*//-&*(><+_');
 
   // THEN the empty search results message should be visible
-  await expect(searchResults.resultsNotFound).toContainText(
-    locale.emptySearch.message,
-  );
+  await expect
+    .soft(searchResults.resultsNotFound)
+    .toContainText(locale.emptySearch.message);
   // AND the empty search results description should be visible
   await expect(searchResults.resultsNotFound).toContainText(
     locale.emptySearch.description,
