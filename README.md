@@ -1,6 +1,6 @@
-![build](https://github.com/vit-ganich/google-maps-test/actions/workflows/ci.yml/badge.svg)
+![build](https://github.com/vit-ganich/google-maps-playwright/actions/workflows/ci.yml/badge.svg)
 
-# google-maps-test
+# google-maps-playwright
 
 Playwright test project with smoke tests for Google Maps
 CI - GitHub Actions with storing test artifacts
@@ -14,7 +14,7 @@ This project contains Playwright tests for Google Maps
 Clone the repository:
 
 ```bash
-git clone https://github.com/vit-ganich/google-maps-test.git
+git clone https://github.com/vit-ganich/google-maps-playwright.git
 ```
 
 Install the dependencies using npm.  

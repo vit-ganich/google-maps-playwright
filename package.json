@@ -1,5 +1,5 @@
 {
-  "name": "google-maps-test",
+  "name": "google-maps-playwright",
   "version": "1.0.0",
   "description": "E2E tests for Google Maps with Playwright",
   "main": "index.js",
