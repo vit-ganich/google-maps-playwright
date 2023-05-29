@@ -57,7 +57,7 @@ test(`AC3: ${localeName} - Empty search results with an invalid keyword`, async 
 }) => {
   // WHEN the user enters invalid characters in the search box
   // AND clicks “Search”
-  const searchResults = await googleMapsPage.perfomSearch('*//-&*(><+_');
+  const searchResults = await googleMapsPage.perfomSearch('*//-&*(><+_*&*#@$');
 
   // THEN the empty search results message should be visible
   await expect

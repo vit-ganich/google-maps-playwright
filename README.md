@@ -65,7 +65,35 @@ npm run show:report
 ```
 
 ### CI
-The project has 
+
+The project has a GitHub Actions workflow configured.  
+Triggers: `on push`, `workflow_dispatch`  
+If there is any push to main or test/\*\* branch - the CI will be triggered.  
+The workflow can be triggered manually as well, need to specify the `locale` parameter.  
+The tests will be run agains the chosen locale (en-GB or pl-PL).
+Scheduled job can be run as well.
+
+```yaml
+on:
+  push:
+    branches:
+      - main
+      - test/**
+  workflow_dispatch:
+    inputs:
+      locale:
+        type: choice
+        required: true
+        description: Locale
+        options:
+          - en-GB
+          - pl-PL
+        default: en-GB
+
+  schedule:
+    # At 00:00 on every day-of-week from Monday through Friday
+    - cron: '0 0 * * 1-5'
+```
 
 ### Troubleshooting
 

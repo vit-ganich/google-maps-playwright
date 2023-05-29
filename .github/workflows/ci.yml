@@ -45,7 +45,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - name: 'Run tests, locale: ${{ github.event.inputs.locale }}'
+      - name: 'Run tests ${{ github.event.inputs.locale }}'
         run: npm test
 
       - uses: actions/upload-artifact@v3
