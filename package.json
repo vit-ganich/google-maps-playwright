@@ -8,6 +8,7 @@
     "format": "prettier --write \"./**/*{ts,md}\"",
     "fromat:check": "prettier --list-different \"./**/*.{ts,md}\"",
     "test": "npx playwright test",
+    "update-snapshots": "npx playwright test --grep @visual --update-snapshots --reporter=list",
     "test:headed": "npx playwright test --headed",
     "test:debug": "npx playwright test --grep @debug --debug",
     "show:report": "npx playwright show-report"
