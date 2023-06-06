@@ -72,3 +72,7 @@ test(`AC3: ${localeName} - Empty search results with an invalid keyword`, async 
     locale.emptySearch.description,
   );
 });
+
+test(`AC4: ${localeName} - Visual test @visual`, async ({ page }) => {
+  await expect(page).toHaveScreenshot()
+});
