@@ -43,7 +43,7 @@ jobs:
         run: npx playwright install --with-deps chromium
       # Update the snapshots
       - name: Update snapshots
-        run: npm run visual
+        run: npm run update-snapshots
       # Commit the changes
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
