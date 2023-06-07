@@ -18,19 +18,12 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      
-      - name: Get Branch
-        id: getbranch
-        run: "base branch: ${BASE_BRANCH}"
-        shell: bash
-        env:
-          BASE_BRANCH: ${{ github.base_ref }}
 
       - name: Fetch Branch
         run: git fetch
 
       - name: Checkout Branch
-        run: git checkout ${BASE_BRANCH}
+        run: git checkout ${{ github.ref_name }}
 
       # Continue with standard build
       - uses: actions/setup-node@v3
