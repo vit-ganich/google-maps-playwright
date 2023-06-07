@@ -34,7 +34,7 @@ jobs:
         run: git fetch
 
       - name: Checkout Branch
-        run: git checkout ${{ env.BRANCH_NAME }}
+        run: git checkout ${{ steps.getbranch.outputs.branch }}
 
       # Continue with standard build
       - uses: actions/setup-node@v3
