@@ -27,13 +27,13 @@ jobs:
               -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
               https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.issue.number }} \
             | jq -r '.head.ref')
-          echo "BRANCH_NAME=$branch" >> GITHUB_ENV
+          echo "branch=$branch" >> $GITHUB_OUTPUT
 
       - name: Fetch Branch
         run: git fetch
 
       - name: Checkout Branch
-        run: git checkout $BRANCH_NAME
+        run: git checkout ${{ steps.getbranch.outputs.branch }}
 
       # Continue with standard build
       - uses: actions/setup-node@v3
