@@ -19,11 +19,18 @@ jobs:
         with:
           fetch-depth: 0
       
+      - name: Get Branch
+        id: getbranch
+        run: echo "Pull request's base branch is: ${BASE_BRANCH}"
+        shell: bash
+        env:
+          BASE_BRANCH: ${{ github.base_ref }}
+
       - name: Fetch Branch
         run: git fetch
 
       - name: Checkout Branch
-        run: git checkout ${{ github.event.pull_request.base.ref }}
+        run: git checkout ${BASE_BRANCH}
 
       # Continue with standard build
       - uses: actions/setup-node@v3
