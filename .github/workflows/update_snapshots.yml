@@ -21,7 +21,7 @@ jobs:
       
       - name: Get Branch
         id: getbranch
-        run: echo "Pull request's base branch is: ${BASE_BRANCH}"
+        run: "base branch: ${BASE_BRANCH}"
         shell: bash
         env:
           BASE_BRANCH: ${{ github.base_ref }}
