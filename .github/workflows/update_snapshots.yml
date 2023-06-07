@@ -6,7 +6,7 @@ on:
     types: [created]
 
 env:
-  BRANCH_NAME: ${{ github.head_ref }}
+  BRANCH_NAME: ${{ github.event.pull_request.base.ref }}
 
 jobs:
   slash_command:
